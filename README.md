@@ -13,7 +13,9 @@ When using `TemporalAgent` from pydantic_ai, output validation (pydantic model p
 4. Validation in workflow → fails again
 5. After max retries exhausted, **workflow fails** with `UnexpectedModelBehavior`
 
-**Consequence**: When validation ultimately fails, it's a workflow-level failure, not an activity failure. This means Temporal's activity retry policies, timeouts, and error handling don't apply to validation failures.
+**Consequences**:
+- When validation ultimately fails, it's a workflow-level failure, not an activity failure. Temporal's activity retry policies, timeouts, and error handling don't apply to validation failures.
+- Since validation isn't an activity, you can't inspect the input passed to validation in Temporal's UI - making debugging harder.
 
 ## Why This Matters
 
