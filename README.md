@@ -77,6 +77,6 @@ ValidationError: 1 validation error for ImpossibleOutput
 ## Environment
 
 - Python 3.12
-- pydantic-ai >= 0.2.0
+- pydantic-ai 1.23.0
 - temporalio >= 1.11.0
 - Vertex AI (gemini-2.0-flash)

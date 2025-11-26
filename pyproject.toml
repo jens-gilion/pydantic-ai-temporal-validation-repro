@@ -3,7 +3,7 @@ name = "reproduce-pydantic-ai-temporal-bug"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
-    "pydantic-ai>=0.2.0",
+    "pydantic-ai>=1.23.0",
     "google-genai>=1.0.0",
     "google-cloud-aiplatform>=1.50.0",
     "temporalio>=1.11.0",
