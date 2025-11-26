@@ -1,0 +1,45 @@
+services:
+  postgresql:
+    container_name: repro-bug-pg-9f3a
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: temporal
+      POSTGRES_USER: temporal
+    ports:
+      - "5499:5432"
+    volumes:
+      - repro-bug-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  temporal:
+    container_name: repro-bug-temporal-9f3a
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgresql
+    image: temporalio/auto-setup:1.29.0
+    ports:
+      - "7299:7233"
+
+  temporal-ui:
+    container_name: repro-bug-ui-9f3a
+    depends_on:
+      - temporal
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    image: temporalio/ui:2.41.0
+    ports:
+      - "8299:8080"
+
+volumes:
+  repro-bug-pg-data:
+
